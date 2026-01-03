@@ -1,0 +1,150 @@
+.page-container {
+  min-height: 100vh;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 2rem 2rem;
+  overflow: hidden;
+}
+
+.section {
+  scroll-margin-top: 80px;
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+  z-index: 1;
+}
+
+/* Gradient fade overlays for smooth transitions */
+.section::before,
+.section::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 300px;
+  z-index: 2;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.section::before {
+  top: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 30%, rgba(0, 0, 0, 0.3) 60%, transparent 100%);
+}
+
+.section::after {
+  bottom: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 30%, rgba(0, 0, 0, 0.3) 60%, transparent 100%);
+}
+
+/* First section - no top fade */
+.section:first-child::before {
+  opacity: 0;
+}
+
+/* Last section - no bottom fade */
+.section:last-child::after {
+  opacity: 0;
+}
+
+/* Smooth opacity transitions for sections */
+.page-container {
+  transition: opacity 0.8s ease-in-out;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  width: 100%;
+  color: #fff;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: 4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #00d4ff 0%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-subtitle {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #00d4ff;
+  font-weight: 500;
+}
+
+.hero-description {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+  font-family: inherit;
+}
+
+.cta-button:hover {
+  box-shadow: 0 6px 20px rgba(0, 212, 255, 0.6);
+}
+
+.page-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  background: linear-gradient(135deg, #00d4ff 0%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+  }
+
+  .page-title {
+    font-size: 2.5rem;
+  }
+
+  .page-container {
+    padding: 120px 1rem 1rem;
+  }
+}
+

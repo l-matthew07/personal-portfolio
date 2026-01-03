@@ -1,0 +1,154 @@
+.compass-container {
+  position: fixed;
+  right: 80px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 999;
+  pointer-events: none;
+}
+
+.compass {
+  width: 120px;
+  height: 120px;
+  pointer-events: all;
+  position: relative;
+}
+
+.compass-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(0, 212, 255, 0.5);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Static arrow lines - SVG arrows extending from center */
+.compass-arrows {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Text labels positioned outside compass - always visible */
+.compass-label {
+  position: absolute;
+  color: #00d4ff;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  pointer-events: none;
+  z-index: 10;
+  white-space: nowrap;
+  opacity: 0.7;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.compass-label.active {
+  color: #fff;
+  opacity: 1;
+}
+
+.compass-label-up {
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.compass-label-down {
+  bottom: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.compass-label-left {
+  left: -70px;
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+  transform-origin: center;
+}
+
+.compass-label-right {
+  right: -70px;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  transform-origin: center;
+}
+
+.compass-center {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #00d4ff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.8);
+  cursor: grab;
+}
+
+.compass-center:active {
+  cursor: grabbing;
+}
+
+.compass-line {
+  position: absolute;
+  background: rgba(0, 212, 255, 0.3);
+  z-index: 1;
+}
+
+.compass-line-vertical {
+  width: 1px;
+  height: 60%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.compass-line-horizontal {
+  width: 60%;
+  height: 1px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 768px) {
+  .compass-container {
+    right: 20px;
+  }
+
+  .compass {
+    width: 90px;
+    height: 90px;
+  }
+
+  .compass-label {
+    font-size: 9px;
+  }
+
+  .compass-center {
+    width: 10px;
+    height: 10px;
+  }
+
+  .compass-label-left {
+    left: -55px;
+  }
+
+  .compass-label-right {
+    right: -55px;
+  }
+}
