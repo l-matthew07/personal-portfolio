@@ -75,9 +75,9 @@
         }
 
         .dock-item:hover {
-            width: 90px;
-            height: 90px;
-            transform: scale(1.3) translateY(-20px);
+            width: 72px;
+            height: 72px;
+            transform: scale(1.1) translateY(-10px);
         }
 
         .dock-item::after {
@@ -128,6 +128,19 @@
             visibility: visible;
             opacity: 1;
             transform: scale(1) translateY(0);
+        }
+
+        .window.minimized {
+            visibility: visible;
+            opacity: 0;
+            transform: scale(0.3) translateY(100vh);
+            pointer-events: none;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #window-about {
+            background: #1a1a2e;
+            border-color: rgba(255, 255, 255, 0.1);
         }
 
         .title-bar {
@@ -205,37 +218,965 @@
             letter-spacing: -0.5px;
         }
 
-        /* --- Audio Button --- */
-        .audio-btn {
-            position: fixed;
-            top: 25px;
-            right: 25px;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 14px 24px;
-            border-radius: 30px;
+
+        /* --- Finder / Portfolio --- */
+        .finder-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: rgba(0,0,0,0.03);
+            border-bottom: 0.5px solid rgba(0,0,0,0.1);
+            font-size: 13px;
+            color: #666;
+        }
+        .finder-breadcrumb span {
             cursor: pointer;
-            backdrop-filter: blur(25px);
+            color: #007AFF;
+        }
+        .finder-breadcrumb span:hover { text-decoration: underline; }
+        .finder-breadcrumb .bc-sep { color: #999; cursor: default; }
+        .finder-breadcrumb .bc-current { color: #333; font-weight: 600; cursor: default; }
+        .finder-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 110px);
+            gap: 8px 4px;
+            padding: 24px 20px;
+            justify-content: start;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+        .finder-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 6px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: background 0.15s;
+            user-select: none;
+        }
+        .finder-item:hover { background: rgba(0,122,255,0.08); }
+        .finder-item.selected { background: rgba(0,122,255,0.15); }
+        .finder-item .fi-icon { width: 64px; height: 64px; pointer-events: none; }
+        .finder-item .fi-name {
+            font-size: 12px;
+            color: #1a1a1a;
+            line-height: 1.3;
+            max-width: 100px;
+            word-wrap: break-word;
+        }
+        /* TextEdit-style viewer */
+        .textedit-body {
+            flex-grow: 1;
+            padding: 20px 24px;
+            font-family: 'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            color: #1a1a1a;
+            white-space: pre-wrap;
+            overflow-y: auto;
+            background: #fff;
+        }
+        /* Video player */
+        .video-player-body {
+            flex-grow: 1;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .video-player-body video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* --- Spotify Desktop App --- */
+        .spotify-window {
+            background: #0b0b0b;
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+        .spotify-window .title-bar {
+            background: #090909;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .spotify-window .window-title {
+            color: rgba(255, 255, 255, 0.92);
+            font-weight: 500;
+            letter-spacing: 0.01em;
+        }
+        .spotify-window .window-content {
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+            color: #fff;
+            border-radius: 0 0 16px 16px;
+        }
+        .spotify-app {
+            display: grid;
+            grid-template-columns: 280px minmax(0, 1fr);
+            grid-template-rows: minmax(0, 1fr) 92px;
+            height: 100%;
+            background: #000;
+            gap: 8px;
+            padding: 8px;
+        }
+        .spotify-sidebar,
+        .spotify-main {
+            min-height: 0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .spotify-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .spotify-card {
+            background: #121212;
+            border-radius: 10px;
+            padding: 12px;
+        }
+        .spotify-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 18px;
+        }
+        .spotify-brand svg {
+            flex-shrink: 0;
+        }
+        .spotify-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 0;
+            color: #b3b3b3;
             font-size: 14px;
             font-weight: 700;
+        }
+        .spotify-nav-link.active {
+            color: #fff;
+        }
+        .spotify-library-card {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+        .spotify-library-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #b3b3b3;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+        .spotify-library-tools {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .spotify-circle-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .spotify-circle-btn:hover {
+            background: rgba(255, 255, 255, 0.14);
+            transform: scale(1.03);
+        }
+        .spotify-filter-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+        .spotify-chip {
+            padding: 7px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .spotify-chip.muted {
+            color: #b3b3b3;
+        }
+        .spotify-recents {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #b3b3b3;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+        .spotify-playlist-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            overflow-y: auto;
+            margin-right: -6px;
+            padding-right: 6px;
+        }
+        .spotify-playlist-list::-webkit-scrollbar,
+        .spotify-main-scroll::-webkit-scrollbar {
+            width: 8px;
+        }
+        .spotify-playlist-list::-webkit-scrollbar-thumb,
+        .spotify-main-scroll::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.18);
+        }
+        .spotify-playlist-item {
+            display: grid;
+            grid-template-columns: 48px minmax(0, 1fr);
+            gap: 12px;
+            padding: 8px;
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            color: inherit;
+            text-align: left;
+            font: inherit;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .spotify-playlist-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .spotify-playlist-item.active {
+            background: rgba(255, 255, 255, 0.12);
+        }
+        .spotify-playlist-thumb {
+            width: 48px;
+            height: 48px;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+            padding: 7px;
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            line-height: 1;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+            background-size: cover;
+            background-position: center;
+        }
+        .spotify-playlist-meta {
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 3px;
+        }
+        .spotify-playlist-name {
+            color: #fff;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .spotify-playlist-detail {
+            color: #b3b3b3;
+            font-size: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .spotify-main {
+            display: flex;
+            flex-direction: column;
+            background: #121212;
+        }
+        .spotify-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 22px;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            background: linear-gradient(180deg, rgba(18, 18, 18, 0.96), rgba(18, 18, 18, 0.78));
+            backdrop-filter: blur(18px);
+        }
+        .spotify-top-controls,
+        .spotify-top-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .spotify-nav-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.55);
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .spotify-pill-btn {
+            border: none;
+            border-radius: 999px;
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .spotify-pill-btn.primary {
+            background: #fff;
+            color: #000;
+        }
+        .spotify-pill-btn.secondary {
+            background: rgba(0, 0, 0, 0.58);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+        }
+        .spotify-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #303030, #161616);
+            color: #fff;
+            font-size: 13px;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .spotify-main-scroll {
+            min-height: 0;
+            overflow-y: auto;
+            background: #121212;
+        }
+        .spotify-hero {
+            display: grid;
+            grid-template-columns: 196px minmax(0, 1fr);
+            align-items: flex-end;
+            gap: 24px;
+            min-height: 252px;
+            padding: 22px 28px 18px;
+            background: linear-gradient(180deg, #3d3d3d 0%, rgba(18, 18, 18, 0.75) 56%, #121212 100%);
+        }
+        .spotify-cover-art {
+            width: 196px;
+            height: 196px;
+            flex-shrink: 0;
+            border-radius: 4px;
+            box-shadow: 0 24px 50px rgba(0, 0, 0, 0.45);
+            background-size: cover;
+            background-position: center;
+            background-color: rgba(255, 255, 255, 0.06);
+            overflow: hidden;
+        }
+        .spotify-hero-copy {
+            min-width: 0;
+            padding-bottom: 4px;
+        }
+        .spotify-kicker {
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.9);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+        .spotify-hero-title {
+            margin: 0;
+            color: #fff;
+            font-size: clamp(32px, 4.4vw, 72px);
+            line-height: 0.88;
+            letter-spacing: -0.05em;
+            max-width: 11ch;
+        }
+        .spotify-hero-subtitle {
+            margin: 12px 0 14px;
+            font-size: 14px;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.74);
+            max-width: 660px;
+        }
+        .spotify-hero-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            color: rgba(255, 255, 255, 0.92);
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .spotify-hero-meta .spotify-avatar {
+            width: 28px;
+            height: 28px;
+            font-size: 12px;
+            background: linear-gradient(135deg, #1db954, #106134);
+        }
+        .spotify-actions {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 20px 28px 12px;
+        }
+        .spotify-play-btn {
+            width: 56px;
+            height: 56px;
+            border: none;
+            border-radius: 50%;
+            background: #1ed760;
+            color: #000;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 14px 26px rgba(30, 215, 96, 0.3);
+        }
+        .spotify-play-btn:hover {
+            transform: scale(1.03);
+            background: #3be477;
+        }
+        .spotify-ghost-btn {
+            background: transparent;
+            border: none;
+            color: #b3b3b3;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .spotify-overview {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 0 28px 12px;
+            color: #b3b3b3;
+            font-size: 13px;
+        }
+        .spotify-overview-description {
+            flex: 1;
+            min-width: 0;
+            margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .spotify-overview-stat {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .spotify-overview-stat strong {
+            color: #fff;
+            font-weight: 600;
+        }
+        .spotify-track-table {
+            padding: 0 20px 18px;
+        }
+        .spotify-track-head,
+        .spotify-track-row {
+            display: grid;
+            grid-template-columns: 32px minmax(0, 1.9fr) minmax(120px, 1.2fr) 96px 52px;
+            gap: 12px;
+            align-items: center;
+        }
+        .spotify-track-head {
+            padding: 0 12px 10px;
+            color: #b3b3b3;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .spotify-track-list {
+            display: flex;
+            flex-direction: column;
+            padding-top: 8px;
+        }
+        .spotify-track-row {
+            min-height: 54px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .spotify-track-row:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .spotify-track-row.active {
+            background: rgba(255, 255, 255, 0.12);
+        }
+        .spotify-track-number,
+        .spotify-track-date,
+        .spotify-track-duration {
+            color: #b3b3b3;
+            font-size: 13px;
+        }
+        .spotify-track-number {
+            text-align: center;
+        }
+        .spotify-track-title {
+            min-width: 0;
+        }
+        .spotify-track-title strong,
+        .spotify-track-album {
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .spotify-track-title span {
+            display: block;
+            color: #b3b3b3;
+            font-size: 13px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 3px;
+        }
+        .spotify-track-album {
+            color: #b3b3b3;
+            font-size: 13px;
+        }
+        .spotify-preview-card {
+            background: #181818;
+            border-radius: 8px;
+            margin: 0 28px 28px;
+            padding: 16px;
+        }
+        .spotify-preview-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 14px;
+        }
+        .spotify-preview-copy h3,
+        .spotify-preview-copy p {
+            margin: 0;
+        }
+        .spotify-preview-copy h3 {
+            color: #fff;
+            font-size: 14px;
+        }
+        .spotify-preview-copy p {
+            margin-top: 4px;
+            color: #b3b3b3;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+        .spotify-preview-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 8px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            flex-shrink: 0;
+        }
+        .spotify-embed-wrap {
+            overflow: hidden;
+            border-radius: 8px;
+            background: #0e0e0e;
+        }
+        .spotify-embed-wrap > div,
+        .spotify-embed-wrap iframe {
+            width: 100%;
+        }
+        .spotify-embed-wrap iframe {
+            display: block;
+        }
+        .spotify-player {
+            grid-column: 1 / -1;
+            background: #181818;
+            border-top: 1px solid #282828;
+            border-radius: 0 0 10px 10px;
+            display: grid;
+            grid-template-columns: minmax(220px, 1fr) minmax(340px, 1.15fr) minmax(220px, 1fr);
+            align-items: center;
+            gap: 16px;
+            padding: 12px 16px;
+        }
+        .spotify-now {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+        .spotify-now-art {
+            width: 56px;
+            height: 56px;
+            border-radius: 4px;
+            flex-shrink: 0;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+            background-size: cover;
+            background-position: center;
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+        .spotify-now-copy {
+            min-width: 0;
+        }
+        .spotify-now-title,
+        .spotify-now-subtitle {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .spotify-now-title {
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        .spotify-now-subtitle {
+            color: #b3b3b3;
+            font-size: 12px;
+        }
+        .spotify-player-center {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+        .spotify-player-controls {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            color: #fff;
+        }
+        .spotify-player-controls button,
+        .spotify-player-right button {
+            border: none;
+            background: transparent;
+            color: inherit;
+            cursor: pointer;
+        }
+        .spotify-player-controls button:disabled,
+        .spotify-player-right button:disabled,
+        .spotify-play-btn:disabled {
+            opacity: 0.45;
+            cursor: default;
+        }
+        .spotify-player-play {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #fff;
+            color: #000;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .spotify-progress {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 36px minmax(0, 1fr) 36px;
+            gap: 10px;
+            align-items: center;
+            color: #b3b3b3;
+            font-size: 11px;
+        }
+        .spotify-progress-bar,
+        .spotify-volume-bar {
+            height: 4px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.12);
+            overflow: hidden;
+        }
+        .spotify-progress-fill,
+        .spotify-volume-fill {
+            height: 100%;
+            border-radius: inherit;
+            background: #fff;
+        }
+        .spotify-player-right {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+            color: #b3b3b3;
+        }
+        .spotify-volume-bar {
+            width: 108px;
+        }
+        @media (max-width: 980px) {
+            .spotify-app {
+                grid-template-columns: 240px minmax(0, 1fr);
+            }
+            .spotify-hero {
+                grid-template-columns: 160px minmax(0, 1fr);
+                gap: 18px;
+            }
+            .spotify-cover-art {
+                width: 160px;
+                height: 160px;
+            }
+            .spotify-hero-title {
+                font-size: clamp(28px, 4vw, 52px);
+            }
+            .spotify-overview {
+                flex-wrap: wrap;
+                gap: 10px 18px;
+            }
+            .spotify-track-head,
+            .spotify-track-row {
+                grid-template-columns: 28px minmax(0, 1.8fr) minmax(110px, 1fr) 88px 48px;
+            }
+        }
+
+        /* --- Fluid Settings Panel --- */
+        .settings-btn {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 1001;
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.2);
             border: 0.5px solid rgba(255, 255, 255, 0.4);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            letter-spacing: 0.8px;
+            border-radius: 50%;
+            cursor: pointer;
+            backdrop-filter: blur(25px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
-
-        .audio-btn:hover {
+        .settings-btn:hover {
             background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.08) translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transform: scale(1.1);
+        }
+        .settings-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: white;
+            transition: transform 0.4s ease;
+        }
+        .settings-btn.open svg {
+            transform: rotate(90deg);
         }
 
-        .audio-btn.active {
-            background: #27c93f;
-            color: #000;
-            border-color: #1e9a30;
+        .fluid-panel {
+            position: fixed;
+            top: 80px;
+            left: 25px;
+            z-index: 1000;
+            width: 310px;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+            background: rgba(20, 24, 30, 0.92);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+            font-size: 13px;
+            color: #c8ccd4;
+            opacity: 0;
+            transform: translateY(-10px) scale(0.96);
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
         }
+        .fluid-panel.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: all;
+        }
+        .fluid-panel::-webkit-scrollbar { width: 4px; }
+        .fluid-panel::-webkit-scrollbar-track { background: transparent; }
+        .fluid-panel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+
+        .fp-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            min-height: 36px;
+        }
+        .fp-row:hover { background: rgba(255, 255, 255, 0.03); }
+        .fp-label { flex-shrink: 0; margin-right: 12px; }
+
+        .fp-folder {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .fp-folder-header {
+            display: flex;
+            align-items: center;
+            padding: 10px 16px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #8ab4f8;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            user-select: none;
+        }
+        .fp-folder-header:hover { background: rgba(255,255,255,0.03); }
+        .fp-folder-arrow {
+            margin-right: 8px;
+            font-size: 10px;
+            transition: transform 0.2s;
+            display: inline-block;
+        }
+        .fp-folder.closed .fp-folder-arrow { transform: rotate(-90deg); }
+        .fp-folder.closed .fp-folder-body { display: none; }
+        .fp-folder-body .fp-row { padding-left: 24px; }
+        .fp-folder-body .fp-row::before {
+            content: '';
+            position: absolute;
+            left: 16px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(138, 180, 248, 0.15);
+        }
+        .fp-folder-body .fp-row { position: relative; }
+
+        .fp-select {
+            background: rgba(255,255,255,0.08);
+            color: #c8ccd4;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
+            outline: none;
+        }
+        .fp-select:focus { border-color: #8ab4f8; }
+
+        .fp-slider-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            margin-left: 8px;
+        }
+        .fp-slider {
+            flex: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            outline: none;
+            cursor: pointer;
+        }
+        .fp-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            background: #5b9bd5;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+        }
+        .fp-slider-val {
+            min-width: 36px;
+            text-align: right;
+            font-size: 12px;
+            color: #8ab4f8;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .fp-check {
+            width: 16px;
+            height: 16px;
+            accent-color: #5b9bd5;
+            cursor: pointer;
+        }
+
+        .fp-btn {
+            width: 100%;
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.06);
+            border: none;
+            color: #c8ccd4;
+            font-size: 13px;
+            cursor: pointer;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .fp-btn:hover { background: rgba(255,255,255,0.1); }
+
+        .fp-color-preview {
+            width: 80px;
+            height: 24px;
+            border-radius: 4px;
+            border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .fp-color-preview input[type="color"] {
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            width: calc(100% + 8px);
+            height: calc(100% + 8px);
+            border: none;
+            cursor: pointer;
+            opacity: 0;
+        }
+        .fp-color-text {
+            font-size: 11px;
+            color: #8ab4f8;
+            margin-left: 8px;
+        }
+
+        /* --- Fluid On/Off Toggle --- */
+        .fluid-toggle {
+            position: fixed;
+            top: 78px;
+            left: 25px;
+            z-index: 1001;
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 0.5px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            cursor: pointer;
+            backdrop-filter: blur(25px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .fluid-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+        .fluid-toggle svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+            transition: opacity 0.3s;
+        }
+        .fluid-toggle.off {
+            background: rgba(255, 80, 80, 0.3);
+            border-color: rgba(255, 80, 80, 0.5);
+        }
+        .fluid-toggle.off svg { opacity: 0.5; }
+
     </style>
 </head>
 
@@ -243,76 +1184,227 @@
 
     <canvas id="canvas"></canvas>
 
-    <button class="audio-btn" id="audio-btn">ENABLE AUDIO SYNC</button>
+    <!-- Settings Toggle -->
+    <button class="settings-btn" id="settings-btn" title="Fluid Settings">
+        <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 00.12-.61l-1.92-3.32a.49.49 0 00-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 00-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 00-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58a.49.49 0 00-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1115.6 12 3.6 3.6 0 0112 15.6z"/></svg>
+    </button>
+
+    <!-- Fluid On/Off Toggle -->
+    <button class="fluid-toggle" id="fluid-toggle" title="Toggle Fluid Simulation">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+    </button>
+
+    <!-- Fluid Settings Panel -->
+    <div class="fluid-panel" id="fluid-panel">
+        <!-- Quality -->
+        <div class="fp-row">
+            <span class="fp-label">quality</span>
+            <select class="fp-select" id="fp-quality">
+                <option value="1024">high</option>
+                <option value="512">medium</option>
+                <option value="256">low</option>
+                <option value="128">very low</option>
+            </select>
+        </div>
+        <div class="fp-row">
+            <span class="fp-label">sim resolution</span>
+            <select class="fp-select" id="fp-sim-res">
+                <option value="32">32</option>
+                <option value="64">64</option>
+                <option value="128" selected>128</option>
+                <option value="256">256</option>
+            </select>
+        </div>
+
+        <!-- Sliders -->
+        <div class="fp-row">
+            <span class="fp-label">density diffusion</span>
+            <div class="fp-slider-wrap">
+                <input type="range" class="fp-slider" id="fp-density" min="0" max="4" step="0.05" value="1">
+                <span class="fp-slider-val" id="fp-density-val">1</span>
+            </div>
+        </div>
+        <div class="fp-row">
+            <span class="fp-label">velocity diffusion</span>
+            <div class="fp-slider-wrap">
+                <input type="range" class="fp-slider" id="fp-velocity" min="0" max="4" step="0.05" value="0.2">
+                <span class="fp-slider-val" id="fp-velocity-val">0.2</span>
+            </div>
+        </div>
+        <div class="fp-row">
+            <span class="fp-label">pressure</span>
+            <div class="fp-slider-wrap">
+                <input type="range" class="fp-slider" id="fp-pressure" min="0" max="1" step="0.01" value="0.8">
+                <span class="fp-slider-val" id="fp-pressure-val">0.8</span>
+            </div>
+        </div>
+        <div class="fp-row">
+            <span class="fp-label">vorticity</span>
+            <div class="fp-slider-wrap">
+                <input type="range" class="fp-slider" id="fp-curl" min="0" max="50" step="1" value="30">
+                <span class="fp-slider-val" id="fp-curl-val">30</span>
+            </div>
+        </div>
+        <div class="fp-row">
+            <span class="fp-label">splat radius</span>
+            <div class="fp-slider-wrap">
+                <input type="range" class="fp-slider" id="fp-splat" min="0.01" max="1" step="0.01" value="0.25">
+                <span class="fp-slider-val" id="fp-splat-val">0.25</span>
+            </div>
+        </div>
+
+        <!-- Toggles -->
+        <div class="fp-row">
+            <span class="fp-label">shading</span>
+            <input type="checkbox" class="fp-check" id="fp-shading" checked>
+        </div>
+        <div class="fp-row">
+            <span class="fp-label">colorful</span>
+            <input type="checkbox" class="fp-check" id="fp-colorful" checked>
+        </div>
+        <div class="fp-row">
+            <span class="fp-label">paused</span>
+            <input type="checkbox" class="fp-check" id="fp-paused">
+        </div>
+
+        <!-- Random Splats Button -->
+        <button class="fp-btn" id="fp-random-splats">Random splats</button>
+
+        <!-- Bloom Folder -->
+        <div class="fp-folder" id="fp-bloom-folder">
+            <div class="fp-folder-header" onclick="this.parentElement.classList.toggle('closed')">
+                <span class="fp-folder-arrow">&#9660;</span> Bloom
+            </div>
+            <div class="fp-folder-body">
+                <div class="fp-row">
+                    <span class="fp-label">enabled</span>
+                    <input type="checkbox" class="fp-check" id="fp-bloom" checked>
+                </div>
+                <div class="fp-row">
+                    <span class="fp-label">intensity</span>
+                    <div class="fp-slider-wrap">
+                        <input type="range" class="fp-slider" id="fp-bloom-intensity" min="0.1" max="2" step="0.05" value="0.1">
+                        <span class="fp-slider-val" id="fp-bloom-intensity-val">0.1</span>
+                    </div>
+                </div>
+                <div class="fp-row">
+                    <span class="fp-label">threshold</span>
+                    <div class="fp-slider-wrap">
+                        <input type="range" class="fp-slider" id="fp-bloom-threshold" min="0" max="1" step="0.05" value="0.6">
+                        <span class="fp-slider-val" id="fp-bloom-threshold-val">0.6</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sunrays Folder -->
+        <div class="fp-folder" id="fp-sunrays-folder">
+            <div class="fp-folder-header" onclick="this.parentElement.classList.toggle('closed')">
+                <span class="fp-folder-arrow">&#9660;</span> Sunrays
+            </div>
+            <div class="fp-folder-body">
+                <div class="fp-row">
+                    <span class="fp-label">enabled</span>
+                    <input type="checkbox" class="fp-check" id="fp-sunrays" checked>
+                </div>
+                <div class="fp-row">
+                    <span class="fp-label">weight</span>
+                    <div class="fp-slider-wrap">
+                        <input type="range" class="fp-slider" id="fp-sunrays-weight" min="0.3" max="1" step="0.05" value="1">
+                        <span class="fp-slider-val" id="fp-sunrays-weight-val">1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Capture Folder -->
+        <div class="fp-folder" id="fp-capture-folder">
+            <div class="fp-folder-header" onclick="this.parentElement.classList.toggle('closed')">
+                <span class="fp-folder-arrow">&#9660;</span> Capture
+            </div>
+            <div class="fp-folder-body">
+                <div class="fp-row">
+                    <span class="fp-label">background color</span>
+                    <div class="fp-color-preview" id="fp-bg-color-preview" style="background: #000000;">
+                        <input type="color" id="fp-bg-color" value="#000000">
+                    </div>
+                    <span class="fp-color-text" id="fp-bg-color-text">{r:0,g:0,b:0}</span>
+                </div>
+                <div class="fp-row">
+                    <span class="fp-label">transparent</span>
+                    <input type="checkbox" class="fp-check" id="fp-transparent">
+                </div>
+                <button class="fp-btn" id="fp-screenshot">take screenshot</button>
+            </div>
+        </div>
+    </div>
 
     <div class="dock-container" id="dock">
-        <div class="dock-item" data-label="Explorer" data-window="about">
-            <img src="https://img.icons8.com/fluency/96/000000/info.png" alt="About">
+        <div class="dock-item" data-label="Terminal" data-window="about">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b3/Terminalicon2.png" alt="Terminal">
         </div>
         <div class="dock-item" data-label="Portfolio" data-window="projects">
             <img src="https://img.icons8.com/fluency/96/000000/folder-invoices.png" alt="Projects">
         </div>
-        <div class="dock-item" data-label="Connect" data-window="contact">
-            <img src="https://img.icons8.com/fluency/96/000000/address-book.png" alt="Contact">
+        <div class="dock-item" data-label="Contacts" data-window="contact">
+            <img src="/icons/contacts.svg" alt="Contacts">
         </div>
         <div class="dock-item" data-label="Spotify" data-window="spotify">
-            <img src="https://img.icons8.com/color/96/000000/spotify--v1.png" alt="Spotify">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg" alt="Spotify">
         </div>
     </div>
 
     <!-- Windows -->
-    <div class="window" id="window-about" style="width: 600px; height: 450px; top: 12%; left: 15%;">
-        <div class="title-bar">
+    <div class="window" id="window-about" style="width: 680px; height: 520px; top: 12%; left: 15%;">
+        <div class="title-bar" style="background: #1e1e1e; border-bottom: 1px solid #333;">
             <div class="window-controls">
                 <div class="control close" onclick="closeWindow('about')"></div>
                 <div class="control minimize"></div>
                 <div class="control maximize"></div>
             </div>
-            <div class="window-title">About This Experience</div>
+            <div class="window-title" style="color: #aaa; font-size: 13px;">matthew — zsh — 80x24</div>
         </div>
-        <div class="window-content">
-            <h2>Interactive Fluidity</h2>
-            <p>This is a real-time, audio-reactive Navier-Stokes fluid simulation built by Pavel Dobryakov
-                (PavelDoGreat), optimized for ultra-smooth performance and visual fidelity.</p>
-            <p><strong>Controls:</strong></p>
-            <ul>
-                <li><strong>Mouse:</strong> Create turbulent colorful trails. The speed of your mouse correlates to the
-                    force injected.</li>
-                <li><strong>Audio Sync:</strong> Enabling this captures your system audio. <strong>Bass</strong> drives
-                    massive fluid eruptions, while <strong>highs</strong> modulate the luminescence and bloom intensity.
-                </li>
-            </ul>
-            <p>Features include Bloom, Sunrays, and realistic Shading for a premium "inky" appearance.</p>
-        </div>
+        <div id="terminal-body" style="background: #1a1a2e; color: #c8ccd4; font-family: 'SF Mono', 'Menlo', 'Monaco', 'Courier New', monospace; font-size: 14px; line-height: 1.7; padding: 24px 28px; overflow-y: auto; flex-grow: 1; white-space: pre-wrap;"></div>
     </div>
 
-    <div class="window" id="window-projects" style="width: 700px; height: 500px; top: 18%; left: 25%;">
+    <div class="window" id="window-projects" style="width: 750px; height: 520px; top: 18%; left: 25%;">
         <div class="title-bar">
             <div class="window-controls">
                 <div class="control close" onclick="closeWindow('projects')"></div>
                 <div class="control minimize"></div>
                 <div class="control maximize"></div>
             </div>
-            <div class="window-title">Technical Showcase</div>
+            <div class="window-title" id="finder-title">Portfolio</div>
         </div>
-        <div class="window-content">
-            <h3>Feature Set</h3>
-            <hr>
-            <div style="display: flex; gap: 25px;">
-                <div style="flex: 1;">
-                    <h4>Computational Fluid Dynamics</h4>
-                    <p>A professional GPU solver performing millions of discrete calculations per frame to simulate
-                        incompressible fluid flow.</p>
-                </div>
-                <div style="flex: 1;">
-                    <h4>High-End Rendering</h4>
-                    <p>Incorporates multi-stage bloom, light scattering (Sunrays), and complex color blending
-                        architectures.</p>
-                </div>
+        <div class="finder-breadcrumb" id="finder-breadcrumb"></div>
+        <div class="finder-grid" id="finder-grid"></div>
+    </div>
+
+    <!-- Dynamic TextEdit window for READMEs -->
+    <div class="window" id="window-textedit" style="width: 620px; height: 460px; top: 14%; left: 30%;">
+        <div class="title-bar">
+            <div class="window-controls">
+                <div class="control close" onclick="closeWindow('textedit')"></div>
+                <div class="control minimize"></div>
+                <div class="control maximize"></div>
             </div>
-            <h4>macOS Design System</h4>
-            <p>A pixel-perfect recreation of the macOS dock and window management system, utilizing modern CSS
-                glassmorphism and spring-based animations.</p>
+            <div class="window-title" id="textedit-title">README.md</div>
+        </div>
+        <div class="textedit-body" id="textedit-body"></div>
+    </div>
+
+    <!-- Dynamic video player window -->
+    <div class="window" id="window-videoplayer" style="width: 720px; height: 480px; top: 10%; left: 22%;">
+        <div class="title-bar" style="background: #1e1e1e; border-bottom: 1px solid #333;">
+            <div class="window-controls">
+                <div class="control close" onclick="closeWindow('videoplayer')"></div>
+                <div class="control minimize"></div>
+                <div class="control maximize"></div>
+            </div>
+            <div class="window-title" id="videoplayer-title" style="color: #aaa;">demo.mp4</div>
+        </div>
+        <div class="video-player-body">
+            <video id="videoplayer-video" controls></video>
         </div>
     </div>
 
@@ -328,48 +1420,210 @@
         <div class="window-content" style="text-align: center;">
             <h2>Let's Talk</h2>
             <p>I'm always open to new opportunities and creative collaborations.</p>
-            <div style="margin-top: 30px; display: flex; flex-direction: column; gap: 10px;">
-                <p><strong>Email:</strong> matthew@personal-web.com</p>
-                <p><strong>GitHub:</strong> github.com/matthew-dev</p>
-                <p><strong>X:</strong> @matthew_webgl</p>
+            <div style="margin-top: 30px; display: flex; flex-direction: column; gap: 14px; align-items: center;">
+                <a href="mailto:matthew.li1@uwaterloo.ca" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: #1a1a1a; background: rgba(0,0,0,0.04); padding: 12px 24px; border-radius: 12px; width: 220px; transition: all 0.2s;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="#333"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    <span style="font-weight: 600; font-size: 15px;">Email</span>
+                </a>
+                <a href="https://github.com/l-matthew07/" target="_blank" rel="noopener" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: #1a1a1a; background: rgba(0,0,0,0.04); padding: 12px 24px; border-radius: 12px; width: 220px; transition: all 0.2s;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="#333"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    <span style="font-weight: 600; font-size: 15px;">GitHub</span>
+                </a>
+                <a href="https://x.com/_matthewlii" target="_blank" rel="noopener" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: #1a1a1a; background: rgba(0,0,0,0.04); padding: 12px 24px; border-radius: 12px; width: 220px; transition: all 0.2s;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#333"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    <span style="font-weight: 600; font-size: 15px;">X</span>
+                </a>
+                <a href="https://www.linkedin.com/in/matthew-li07/" target="_blank" rel="noopener" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: #1a1a1a; background: rgba(0,0,0,0.04); padding: 12px 24px; border-radius: 12px; width: 220px; transition: all 0.2s;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="#0A66C2"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    <span style="font-weight: 600; font-size: 15px;">LinkedIn</span>
+                </a>
             </div>
         </div>
     </div>
 
-    <div class="window" id="window-spotify" style="width: 800px; height: 550px; top: 10%; left: 30%;">
+    <div class="window spotify-window" id="window-spotify"
+        style="width: min(1120px, calc(100vw - 80px)); height: min(720px, calc(100vh - 120px)); top: 8%; left: 14%;">
         <div class="title-bar">
             <div class="window-controls">
                 <div class="control close" onclick="closeWindow('spotify')"></div>
                 <div class="control minimize"></div>
                 <div class="control maximize"></div>
             </div>
-            <div class="window-title">Spotify Library</div>
+            <div class="window-title">Spotify</div>
         </div>
-        <div class="window-content"
-            style="padding: 0; display: flex; background: rgba(255,255,255,0.9); border-radius: 0 0 16px 16px;">
-            <div
-                style="width: 220px; background: rgba(0,0,0,0.03); border-right: 0.5px solid rgba(0,0,0,0.1); padding: 25px; display: flex; flex-direction: column;">
-                <h4 style="margin-top: 0; color: #1DB954; font-size: 16px; letter-spacing: -0.3px;">Playlists</h4>
-                <ul id="playlist-list"
-                    style="list-style: none; padding: 0; margin: 0; font-size: 14px; font-weight: 500; flex-grow: 1;">
-                    <!-- Playlists will be loaded dynamically -->
-                    <li style="padding: 10px 14px; color: #888;">Loading playlists...</li>
-                </ul>
-                <div style="margin-top: 20px; font-size: 11px; color: #888; line-height: 1.4;">
-                    <p><strong>Pro Tip:</strong> Ensure "SYSTEM AUDIO ACTIVE" is enabled to see the fluids dance to the
-                        beat.</p>
-                </div>
-            </div>
-            <div style="flex-grow: 1; background: #000; overflow: hidden;">
-                <iframe id="spotify-iframe" style="border: none;"
-                    src="https://open.spotify.com/embed/playlist/37i9dQZF1DX8Ueb9C7V3vO?utm_source=generator&theme=0"
-                    width="100%" height="100%" allowfullscreen=""
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy"></iframe>
+        <div class="window-content">
+            <div class="spotify-app">
+                <aside class="spotify-sidebar">
+                    <div class="spotify-card">
+                        <div class="spotify-brand">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <circle cx="12" cy="12" r="12" fill="#1ED760" />
+                                <path d="M17.524 15.231a.75.75 0 01-1.034.247c-2.834-1.73-6.4-2.121-10.6-1.164a.75.75 0 01-.333-1.463c4.586-1.044 8.507-.601 11.716 1.357a.75.75 0 01.251 1.023zM18.997 11.957a.937.937 0 01-1.29.31c-3.244-1.994-8.185-2.572-12.021-1.406a.937.937 0 01-.544-1.794c4.375-1.328 9.81-.689 13.548 1.609a.937.937 0 01.307 1.281zM19.121 8.548C15.24 6.244 8.836 6.032 5.13 7.126a1.125 1.125 0 11-.638-2.157C8.76 3.709 15.826 3.96 20.27 6.597a1.125 1.125 0 11-1.149 1.951z" fill="#0B0B0B" />
+                            </svg>
+                            <span>Spotify</span>
+                        </div>
+                        <div class="spotify-nav-link active">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.707 3.293a1 1 0 00-1.414 0l-8 8A1 1 0 004 13h1v7a1 1 0 001 1h4a1 1 0 001-1v-4h2v4a1 1 0 001 1h4a1 1 0 001-1v-7h1a1 1 0 00.707-1.707l-8-8z"/></svg>
+                            <span>Home</span>
+                        </div>
+                        <div class="spotify-nav-link">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 18a8 8 0 115.293-14.001A8 8 0 0110 18zm0-14a6 6 0 104.472 10.014A6 6 0 0010 4zm8.707 13.293l2 2a1 1 0 01-1.414 1.414l-2-2a1 1 0 011.414-1.414z"/></svg>
+                            <span>Search</span>
+                        </div>
+                    </div>
+                    <div class="spotify-card spotify-library-card">
+                        <div class="spotify-library-header">
+                            <span>Your Library</span>
+                            <div class="spotify-library-tools">
+                                <button class="spotify-circle-btn" type="button" aria-label="Create">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11 4h2v7h7v2h-7v7h-2v-7H4v-2h7z"/></svg>
+                                </button>
+                                <button class="spotify-circle-btn" type="button" aria-label="Library options">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 10h14v2H5zm0-6h14v2H5zm0 12h14v2H5z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="spotify-filter-row">
+                            <span class="spotify-chip">Playlists</span>
+                            <span class="spotify-chip muted">Artists</span>
+                            <span class="spotify-chip muted">Albums</span>
+                        </div>
+                        <div class="spotify-recents">
+                            <span>Recents</span>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 10l5 5 5-5z"/></svg>
+                        </div>
+                        <div id="playlist-list" class="spotify-playlist-list"></div>
+                    </div>
+                </aside>
+                <main class="spotify-main">
+                    <div class="spotify-topbar">
+                        <div class="spotify-top-controls">
+                            <button class="spotify-nav-btn" type="button" aria-label="Back">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.53 5.47a.75.75 0 010 1.06L10.06 12l5.47 5.47a.75.75 0 11-1.06 1.06l-6-6a.75.75 0 010-1.06l6-6a.75.75 0 011.06 0z"/></svg>
+                            </button>
+                            <button class="spotify-nav-btn" type="button" aria-label="Forward">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.47 18.53a.75.75 0 010-1.06L13.94 12 8.47 6.53a.75.75 0 111.06-1.06l6 6a.75.75 0 010 1.06l-6 6a.75.75 0 01-1.06 0z"/></svg>
+                            </button>
+                        </div>
+                        <div class="spotify-top-actions">
+                            <button class="spotify-pill-btn secondary" type="button">Explore Premium</button>
+                            <button class="spotify-pill-btn primary" type="button">Install App</button>
+                            <span class="spotify-avatar">ML</span>
+                        </div>
+                    </div>
+                    <div class="spotify-main-scroll">
+                        <section class="spotify-hero" id="spotify-hero">
+                            <div class="spotify-cover-art" id="spotify-cover-art"></div>
+                            <div class="spotify-hero-copy">
+                                <div class="spotify-kicker">Public Playlist</div>
+                                <h1 class="spotify-hero-title" id="spotify-playlist-title"></h1>
+                                <p class="spotify-hero-subtitle" id="spotify-playlist-subtitle"></p>
+                                <div class="spotify-hero-meta">
+                                    <span class="spotify-avatar">M</span>
+                                    <span id="spotify-owner-name">Matthew Li</span>
+                                    <span>•</span>
+                                    <span id="spotify-playlist-count"></span>
+                                    <span>•</span>
+                                    <span id="spotify-playlist-showing"></span>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="spotify-actions">
+                            <button class="spotify-play-btn" id="spotify-main-play-btn" type="button" aria-label="Play playlist">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.18-5.18a1 1 0 000-1.68L9.54 5.98A1 1 0 008 6.82z"/></svg>
+                            </button>
+                            <button class="spotify-ghost-btn" type="button" aria-label="Add to library">+</button>
+                            <button class="spotify-ghost-btn" type="button" aria-label="More">•••</button>
+                        </section>
+                        <section class="spotify-overview">
+                            <p class="spotify-overview-description" id="spotify-playlist-description"></p>
+                            <div class="spotify-overview-stat">
+                                <span>Owner</span>
+                                <strong id="spotify-overview-owner">Matthew</strong>
+                            </div>
+                            <div class="spotify-overview-stat">
+                                <span>Showing</span>
+                                <strong id="spotify-overview-showing"></strong>
+                            </div>
+                        </section>
+                        <section class="spotify-track-table">
+                            <div class="spotify-track-head">
+                                <span>#</span>
+                                <span>Title</span>
+                                <span>Album</span>
+                                <span>Source</span>
+                                <span>
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.75a.75.75 0 01.75.75v8.69l4.28 2.47a.75.75 0 11-.75 1.3l-4.65-2.69A.75.75 0 0111.25 12V2.5a.75.75 0 01.75-.75zM12 4a8 8 0 100 16 8 8 0 000-16zm-9.5 8a9.5 9.5 0 1119 0 9.5 9.5 0 01-19 0z"/></svg>
+                                </span>
+                            </div>
+                            <div id="spotify-track-list" class="spotify-track-list"></div>
+                        </section>
+                        <section class="spotify-preview-card">
+                            <div class="spotify-preview-header">
+                                <div class="spotify-preview-copy">
+                                    <h3>Preview in Spotify</h3>
+                                    <p>Real Spotify playback lives in this embed, while the surrounding layout mirrors the desktop playlist view.</p>
+                                </div>
+                                <a class="spotify-preview-link" id="spotify-open-link" href="https://open.spotify.com/playlist/5rfckXYfGDYzqjGlhZ1mi0" target="_blank" rel="noopener">Open in Spotify</a>
+                            </div>
+                            <div class="spotify-embed-wrap">
+                                <div id="spotify-embed-host"></div>
+                            </div>
+                        </section>
+                    </div>
+                </main>
+                <footer class="spotify-player">
+                    <div class="spotify-now">
+                        <div class="spotify-now-art" id="spotify-now-art"></div>
+                        <div class="spotify-now-copy">
+                            <div class="spotify-now-title" id="spotify-now-title"></div>
+                            <div class="spotify-now-subtitle" id="spotify-now-subtitle"></div>
+                        </div>
+                    </div>
+                    <div class="spotify-player-center">
+                        <div class="spotify-player-controls">
+                            <button type="button" aria-label="Shuffle">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.75 3a.75.75 0 01.75.75V7a.75.75 0 01-1.5 0V5.56l-4.72 4.72a3.75 3.75 0 01-5.3 0L3.53 5.82a.75.75 0 111.06-1.06l4.42 4.42a2.25 2.25 0 003.18 0L16.94 4.5H15.5a.75.75 0 010-1.5h3.25zM18 16.94v-1.44a.75.75 0 011.5 0v3.25a.75.75 0 01-.75.75H15.5a.75.75 0 010-1.5h1.44l-1.4-1.4a3.75 3.75 0 00-5.3 0l-2.65 2.65a.75.75 0 11-1.06-1.06l2.65-2.65a5.25 5.25 0 017.42 0L18 16.94zm-9.72-3.22a.75.75 0 010 1.06L4.6 18.46a.75.75 0 11-1.06-1.06l3.68-3.68a.75.75 0 011.06 0z"/></svg>
+                            </button>
+                            <button id="spotify-player-prev-btn" type="button" aria-label="Previous">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5.75a.75.75 0 011.5 0v12.5a.75.75 0 01-1.5 0V5.75zm11.72.66a.75.75 0 010 1.06L12.53 12l5.19 4.53a.75.75 0 11-.99 1.12l-6-5.25a.75.75 0 010-1.12l6-5.25a.75.75 0 011 .03z"/></svg>
+                            </button>
+                            <button class="spotify-player-play" id="spotify-player-play-btn" type="button" aria-label="Play">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.18-5.18a1 1 0 000-1.68L9.54 5.98A1 1 0 008 6.82z"/></svg>
+                            </button>
+                            <button id="spotify-player-next-btn" type="button" aria-label="Next">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 5.75a.75.75 0 011.5 0v12.5a.75.75 0 01-1.5 0V5.75zM6.28 6.41a.75.75 0 011 .03l6 5.25a.75.75 0 010 1.12l-6 5.25a.75.75 0 11-.99-1.12L11.47 12 6.28 7.47a.75.75 0 010-1.06z"/></svg>
+                            </button>
+                            <button type="button" aria-label="Repeat">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 6.75A2.75 2.75 0 018.75 4h7.69l-1.22-1.22a.75.75 0 111.06-1.06l2.5 2.5a.75.75 0 010 1.06l-2.5 2.5a.75.75 0 01-1.06-1.06L16.44 5.5H8.75A1.25 1.25 0 007.5 6.75v3a.75.75 0 01-1.5 0v-3zm11.25 10.5A1.25 1.25 0 0018.5 16v-3a.75.75 0 011.5 0v3A2.75 2.75 0 0117.25 18h-7.69l1.22 1.22a.75.75 0 11-1.06 1.06l-2.5-2.5a.75.75 0 010-1.06l2.5-2.5a.75.75 0 011.06 1.06L9.56 16.5h7.69z"/></svg>
+                            </button>
+                        </div>
+                        <div class="spotify-progress">
+                            <span id="spotify-progress-current">0:42</span>
+                            <div class="spotify-progress-bar">
+                                <div class="spotify-progress-fill" id="spotify-progress-fill" style="width: 28%;"></div>
+                            </div>
+                            <span id="spotify-progress-total">2:31</span>
+                        </div>
+                    </div>
+                    <div class="spotify-player-right">
+                        <button type="button" aria-label="Queue">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 6.75A.75.75 0 014.75 6h14.5a.75.75 0 010 1.5H4.75A.75.75 0 014 6.75zm0 5A.75.75 0 014.75 11h9.5a.75.75 0 010 1.5h-9.5a.75.75 0 01-.75-.75zm.75 4.25a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zm13.47-3.78L16 10.5v7a.75.75 0 001.16.63l2.78-1.78a.75.75 0 000-1.26z"/></svg>
+                        </button>
+                        <button type="button" aria-label="Devices">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.75 4A2.75 2.75 0 002 6.75v8.5A2.75 2.75 0 004.75 18h4.49l-.77 1.53a.75.75 0 001.34.66L10.91 18h2.18l1.1 2.19a.75.75 0 001.34-.66L14.76 18h4.49A2.75 2.75 0 0022 15.25v-8.5A2.75 2.75 0 0019.25 4H4.75zm0 1.5h14.5c.69 0 1.25.56 1.25 1.25v8.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-8.5c0-.69.56-1.25 1.25-1.25z"/></svg>
+                        </button>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 9.75A2.75 2.75 0 017.75 7H9V5.75a.75.75 0 011.28-.53l4 4a.75.75 0 010 1.06l-4 4A.75.75 0 019 13.75V12.5H7.75A2.75 2.75 0 015 9.75zm10 4.5a.75.75 0 011.28-.53A5.73 5.73 0 0018 9.75a5.73 5.73 0 00-1.72-3.97.75.75 0 111.06-1.06A7.23 7.23 0 0119.5 9.75a7.23 7.23 0 01-2.16 5.03.75.75 0 01-1.06 0A.75.75 0 0115 14.25zm-1.97-1.97a.75.75 0 011.06 0A2.97 2.97 0 0015 9.75a2.97 2.97 0 00-.91-2.13.75.75 0 111.06-1.06A4.47 4.47 0 0116.5 9.75a4.47 4.47 0 01-1.35 3.19.75.75 0 01-1.06 0z"/></svg>
+                        <div class="spotify-volume-bar">
+                            <div class="spotify-volume-fill" style="width: 62%;"></div>
+                        </div>
+                    </div>
+                </footer>
             </div>
         </div>
     </div>
 
+    <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
     <script>
         /* 
         * WebGL Fluid Simulation Integration
@@ -401,7 +1655,7 @@
             BLOOM: true,
             BLOOM_ITERATIONS: 8,
             BLOOM_RESOLUTION: 256,
-            BLOOM_INTENSITY: 0.8,
+            BLOOM_INTENSITY: 0.1,
             BLOOM_THRESHOLD: 0.6,
             BLOOM_SOFT_KNEE: 0.7,
             SUNRAYS: true,
@@ -1221,57 +2475,24 @@
 
         /* --- App Interface --- */
 
-        let audioContext, analyser, dataArray, audioStarted = false;
+        let fluidEnabled = true;
         let lastUpdateTime = Date.now();
-        let beatThreshold = 0.45;
-        let beatCooldown = 0;
-        let averageEnergy = 0;
 
         function update() {
             const now = Date.now(), dt = Math.min((now - lastUpdateTime) / 1000, 0.016666);
             lastUpdateTime = now;
             if (resizeCanvas()) initFramebuffers();
 
-            if (audioStarted && analyser) {
-                analyser.getByteFrequencyData(dataArray);
-
-                // Refined Beat Detection (focus on 20-150Hz)
-                let currentEnergy = 0;
-                const bassBins = 8; // approx 0-150Hz
-                for (let i = 0; i < bassBins; i++) currentEnergy += dataArray[i];
-                currentEnergy /= (bassBins * 255);
-
-                // Smoothed average energy
-                averageEnergy = averageEnergy * 0.95 + currentEnergy * 0.05;
-
-                // Trigger splat on beat (toned down)
-                if (currentEnergy > averageEnergy * 1.3 && currentEnergy > 0.3 && now > beatCooldown) {
-                    // Subtle random splat on beat
-                    const color = generateColor();
-                    color.r *= 5.0; color.g *= 5.0; color.b *= 5.0;
-                    const x = Math.random(), y = Math.random();
-                    // Toned down force (using 1/4 of previous force)
-                    splat(x, y, (Math.random() - 0.5) * 1500, (Math.random() - 0.5) * 1500, color);
-
-                    beatCooldown = now + 150; // prevent multiple triggers for same beat
-                }
-
-                // Subtly modulate Bloom based on high frequencies
-                if (config.BLOOM) {
-                    let highs = 0;
-                    for (let i = 32; i < 64; i++) highs += dataArray[i];
-                    highs /= (32 * 255);
-                    config.BLOOM_INTENSITY = 0.5 + highs * 1.5;
-                }
+            if (fluidEnabled) {
+                pointers.forEach(p => { if (p.moved) { p.moved = false; splatPointer(p); } });
+                if (!config.PAUSED) step(dt);
             }
-
-            pointers.forEach(p => { if (p.moved) { p.moved = false; splatPointer(p); } });
-            if (!config.PAUSED) step(dt);
             render(null);
             requestAnimationFrame(update);
         }
 
         canvas.addEventListener('mousemove', e => {
+            if (!fluidEnabled) return;
             let p = pointers[0];
             p.moved = true;
             p.prevTexcoordX = p.texcoordX; p.prevTexcoordY = p.texcoordY;
@@ -1280,87 +2501,595 @@
             p.color = generateColor();
         });
 
-        document.getElementById('audio-btn').addEventListener('click', async () => {
-            if (!audioStarted) {
-                try {
-                    // Use getDisplayMedia to capture system audio
-                    const stream = await navigator.mediaDevices.getDisplayMedia({
-                        video: { width: 1 }, // Video is required for getDisplayMedia but we can make it minimal
-                        audio: true
-                    });
-                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                    const source = audioContext.createMediaStreamSource(stream);
-                    analyser = audioContext.createAnalyser(); analyser.fftSize = 256;
-                    source.connect(analyser); dataArray = new Uint8Array(analyser.frequencyBinCount);
-                    document.getElementById('audio-btn').innerText = "SYSTEM AUDIO ACTIVE";
-                    document.getElementById('audio-btn').classList.add('active');
-                    audioStarted = true;
-
-                    // Stop the video track as we only need the audio
-                    stream.getVideoTracks().forEach(track => track.stop());
-                } catch (e) {
-                    console.error("System audio capture failed or cancelled:", e);
-                    alert("Please enable 'Share System Audio' in the pop-up to sync with computer audio.");
-                }
+        // Fluid on/off toggle
+        document.getElementById('fluid-toggle').addEventListener('click', () => {
+            fluidEnabled = !fluidEnabled;
+            const toggleBtn = document.getElementById('fluid-toggle');
+            toggleBtn.classList.toggle('off', !fluidEnabled);
+            toggleBtn.title = fluidEnabled ? 'Turn off fluid' : 'Turn on fluid';
+            if (!fluidEnabled) {
+                // Clear the canvas to black
+                gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
+                colorProgram.bind();
+                gl.uniform4f(colorProgram.uniforms.color, 0, 0, 0, 1);
+                blit(null);
             }
         });
 
-        function openWindow(id) {
-            document.getElementById('window-' + id).classList.add('active');
-            if (id === 'spotify') fetchPlaylists();
+        // --- Spotify Playlists ---
+        let myPlaylists = [];
+        let spotifyIframeAPI = null;
+        let spotifyEmbedController = null;
+        let spotifyCurrentPlaylistIndex = 0;
+        let spotifyCurrentTrackIndex = 0;
+        let spotifyPendingUri = '';
+        let spotifyPendingAutoplay = false;
+        let spotifyIsPlaying = false;
+
+        const spotifyPlayIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.18-5.18a1 1 0 000-1.68L9.54 5.98A1 1 0 008 6.82z"/></svg>';
+        const spotifyPauseIcon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7.75 5A.75.75 0 017 5.75v12.5a.75.75 0 001.5 0V5.75A.75.75 0 017.75 5zm8.5 0a.75.75 0 01.75.75v12.5a.75.75 0 01-1.5 0V5.75a.75.75 0 01.75-.75z"/></svg>';
+        const spotifyHeroGradients = [
+            ['#8a4f43', '#242424'],
+            ['#4f6986', '#242424'],
+            ['#7d5a27', '#242424'],
+            ['#506933', '#242424'],
+            ['#a34a1a', '#242424'],
+            ['#8d4158', '#242424']
+        ];
+
+        window.onSpotifyIframeApiReady = (IFrameAPI) => {
+            spotifyIframeAPI = IFrameAPI;
+            maybeCreateSpotifyEmbed();
+        };
+
+        function getPlaylistInitials(name) {
+            const cleaned = name
+                .replace(/[^A-Za-z0-9\s]/g, ' ')
+                .trim()
+                .split(/\s+/)
+                .filter(Boolean)
+                .slice(0, 2)
+                .map(part => part[0]?.toUpperCase() || '')
+                .join('');
+            return cleaned || 'ML';
         }
-        function closeWindow(id) { document.getElementById('window-' + id).classList.remove('active'); }
 
-        async function fetchPlaylists() {
-            const list = document.getElementById('playlist-list');
-            try {
-                const response = await fetch('/api/spotify/playlists');
-                const playlists = await response.json();
+        function formatDurationFromMs(ms) {
+            if (!ms) return '--:--';
+            const totalSeconds = Math.floor(ms / 1000);
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            return `${minutes}:${String(seconds).padStart(2, '0')}`;
+        }
 
-                if (playlists.error) throw new Error(playlists.error);
+        function setSpotifyArtwork(el, imageUrl, fallbackText = '') {
+            if (!el) return;
+            el.style.backgroundImage = imageUrl ? `url("${imageUrl}")` : 'none';
+            el.textContent = imageUrl ? '' : fallbackText;
+        }
 
-                list.innerHTML = '';
-                playlists.forEach((p, index) => {
-                    const li = document.createElement('li');
-                    li.innerText = p.name;
-                    li.style.cssText = `padding: 10px 14px; border-radius: 8px; cursor: pointer; margin-bottom: 4px; transition: all 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;`;
-                    li.onclick = () => loadPlaylist(p.id);
-
-                    if (index === 0) {
-                        li.style.background = 'rgba(29, 185, 84, 0.15)';
-                        li.style.color = '#1DB954';
-                        loadPlaylist(p.id); // Load the first one by default
-                    }
-
-                    li.onmouseenter = () => { if (li.style.color !== 'rgb(29, 185, 84)') li.style.background = 'rgba(0,0,0,0.05)'; };
-                    li.onmouseleave = () => { if (li.style.color !== 'rgb(29, 185, 84)') li.style.background = 'transparent'; };
-
-                    list.appendChild(li);
-                });
-            } catch (e) {
-                console.error('Playlist Fetch Error:', e);
-                list.innerHTML = '<li style="padding: 10px 14px; color: #ff5f56; font-size: 12px;">' + (e.message || 'Error loading playlists') + '. <br><br>Please check .env credentials.</li>';
+        function setSpotifyPlayButtons(isPlaying) {
+            const mainBtn = document.getElementById('spotify-main-play-btn');
+            const footerBtn = document.getElementById('spotify-player-play-btn');
+            if (mainBtn) {
+                mainBtn.innerHTML = isPlaying
+                    ? '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.75A.75.75 0 018.75 5h2.5a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 01-.75-.75V5.75zm6 0A.75.75 0 0114.75 5h2.5a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 01-.75-.75V5.75z"/></svg>'
+                    : '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.18-5.18a1 1 0 000-1.68L9.54 5.98A1 1 0 008 6.82z"/></svg>';
+                mainBtn.setAttribute('aria-label', isPlaying ? 'Pause playback' : 'Play playlist');
+            }
+            if (footerBtn) {
+                footerBtn.innerHTML = isPlaying ? spotifyPauseIcon : spotifyPlayIcon;
+                footerBtn.setAttribute('aria-label', isPlaying ? 'Pause playback' : 'Play playback');
             }
         }
 
-        function loadPlaylist(id) {
-            const iframe = document.getElementById('spotify-iframe');
-            iframe.src = `https://open.spotify.com/embed/playlist/${id}?utm_source=generator&theme=0`;
+        function setSpotifyProgress(positionMs = 0, durationMs = 0) {
+            const currentEl = document.getElementById('spotify-progress-current');
+            const totalEl = document.getElementById('spotify-progress-total');
+            const fillEl = document.getElementById('spotify-progress-fill');
+            if (!currentEl || !totalEl || !fillEl) return;
 
-            // Highlight active playlist
-            const items = document.querySelectorAll('#playlist-list li');
-            items.forEach(item => {
-                item.style.background = 'transparent';
-                item.style.color = 'inherit';
-                if (item.onclick.toString().includes(id)) {
-                    item.style.background = 'rgba(29, 185, 84, 0.15)';
-                    item.style.color = '#1DB954';
+            currentEl.textContent = formatDurationFromMs(positionMs);
+            totalEl.textContent = formatDurationFromMs(durationMs);
+            fillEl.style.width = durationMs ? `${Math.min(100, (positionMs / durationMs) * 100)}%` : '0%';
+        }
+
+        function renderActiveTrackRow() {
+            document.querySelectorAll('.spotify-track-row').forEach((row, index) => {
+                row.classList.toggle('active', index === spotifyCurrentTrackIndex);
+            });
+        }
+
+        function updateSpotifyTransportButtons() {
+            const prevBtn = document.getElementById('spotify-player-prev-btn');
+            const nextBtn = document.getElementById('spotify-player-next-btn');
+            const playlist = myPlaylists[spotifyCurrentPlaylistIndex];
+            const hasTracks = !!playlist?.tracks?.length;
+            if (prevBtn) prevBtn.disabled = !hasTracks || spotifyCurrentTrackIndex <= 0;
+            if (nextBtn) nextBtn.disabled = !hasTracks || spotifyCurrentTrackIndex >= playlist.tracks.length - 1;
+        }
+
+        function updateSpotifyNowPlaying(track, playlist) {
+            if (!playlist) return;
+            document.getElementById('spotify-now-title').textContent = track ? track.title : playlist.name;
+            document.getElementById('spotify-now-subtitle').textContent = track
+                ? `${track.artists.join(', ')} • from ${playlist.name}`
+                : 'Spotify playlist preview';
+            setSpotifyArtwork(document.getElementById('spotify-now-art'), track?.albumImageUrl || playlist.imageUrl);
+            setSpotifyProgress(0, track?.durationMs || 0);
+        }
+
+        function getCurrentPlaylist() {
+            return myPlaylists[spotifyCurrentPlaylistIndex] || null;
+        }
+
+        function getCurrentTrack() {
+            return getCurrentPlaylist()?.tracks?.[spotifyCurrentTrackIndex] || null;
+        }
+
+        function findTrackIndexByUri(uri) {
+            const playlist = getCurrentPlaylist();
+            if (!playlist) return -1;
+            return playlist.tracks.findIndex(track => track.uri === uri);
+        }
+
+        function loadSpotifyUri(uri, autoplay = false) {
+            if (!uri) return;
+            spotifyPendingUri = uri;
+            spotifyPendingAutoplay = autoplay;
+            maybeCreateSpotifyEmbed();
+
+            if (!spotifyEmbedController) return;
+
+            spotifyEmbedController.loadUri(uri);
+            if (autoplay) {
+                window.setTimeout(() => {
+                    spotifyEmbedController?.play();
+                }, 180);
+            }
+            spotifyPendingUri = '';
+            spotifyPendingAutoplay = false;
+        }
+
+        function maybeCreateSpotifyEmbed() {
+            const playlist = getCurrentPlaylist();
+            const initialUri = spotifyPendingUri || (playlist ? `spotify:playlist:${playlist.id}` : '');
+            if (!spotifyIframeAPI || spotifyEmbedController || !initialUri) return;
+
+            const host = document.getElementById('spotify-embed-host');
+            if (!host) return;
+
+            spotifyIframeAPI.createController(host, { uri: initialUri, height: 152 }, controller => {
+                spotifyEmbedController = controller;
+
+                controller.addListener('playback_started', event => {
+                    spotifyIsPlaying = true;
+                    setSpotifyPlayButtons(true);
+                    const trackIndex = findTrackIndexByUri(event.data.playingURI);
+                    if (trackIndex >= 0) {
+                        spotifyCurrentTrackIndex = trackIndex;
+                        renderActiveTrackRow();
+                        updateSpotifyNowPlaying(getCurrentTrack(), getCurrentPlaylist());
+                        updateSpotifyTransportButtons();
+                    }
+                });
+
+                controller.addListener('playback_update', event => {
+                    spotifyIsPlaying = !event.data.isPaused && !event.data.isBuffering;
+                    setSpotifyPlayButtons(spotifyIsPlaying);
+                    setSpotifyProgress(event.data.position, event.data.duration);
+
+                    const trackIndex = findTrackIndexByUri(event.data.playingURI);
+                    if (trackIndex >= 0 && trackIndex !== spotifyCurrentTrackIndex) {
+                        spotifyCurrentTrackIndex = trackIndex;
+                        renderActiveTrackRow();
+                        updateSpotifyNowPlaying(getCurrentTrack(), getCurrentPlaylist());
+                        updateSpotifyTransportButtons();
+                    }
+                });
+
+                if (spotifyPendingUri) {
+                    loadSpotifyUri(spotifyPendingUri, spotifyPendingAutoplay);
                 }
             });
         }
 
+        function selectSpotifyTrack(index, { autoplay = false, loadEmbed = true } = {}) {
+            const playlist = getCurrentPlaylist();
+            const track = playlist?.tracks?.[index];
+            if (!track) return;
+
+            spotifyCurrentTrackIndex = index;
+            renderActiveTrackRow();
+            updateSpotifyNowPlaying(track, playlist);
+            updateSpotifyTransportButtons();
+
+            if (loadEmbed) {
+                loadSpotifyUri(track.uri, autoplay);
+            }
+        }
+
+        function toggleSpotifyPlayback() {
+            if (spotifyEmbedController) {
+                spotifyEmbedController.togglePlay();
+                return;
+            }
+
+            const playlist = getCurrentPlaylist();
+            if (!playlist) return;
+
+            if (playlist.tracks?.length) {
+                selectSpotifyTrack(spotifyCurrentTrackIndex || 0, { autoplay: true, loadEmbed: true });
+            } else {
+                loadSpotifyUri(`spotify:playlist:${playlist.id}`, true);
+            }
+        }
+
+        function goToAdjacentSpotifyTrack(direction) {
+            const playlist = getCurrentPlaylist();
+            if (!playlist?.tracks?.length) return;
+            const nextIndex = spotifyCurrentTrackIndex + direction;
+            if (nextIndex < 0 || nextIndex >= playlist.tracks.length) return;
+            selectSpotifyTrack(nextIndex, { autoplay: true, loadEmbed: true });
+        }
+
+        function renderSpotifyTrackList(playlist) {
+            const trackList = document.getElementById('spotify-track-list');
+            trackList.innerHTML = '';
+
+            if (!playlist.tracks.length) {
+                const empty = document.createElement('div');
+                empty.className = 'spotify-track-row';
+                empty.style.cursor = 'default';
+                empty.innerHTML = '<span class="spotify-track-number">-</span><div class="spotify-track-title"><strong>Track list unavailable in this build</strong><span>Use the Spotify embed below to open the playlist directly.</span></div><span class="spotify-track-album">Spotify</span><span class="spotify-track-date">Open</span><span class="spotify-track-duration">--:--</span>';
+                trackList.appendChild(empty);
+                return;
+            }
+
+            playlist.tracks.forEach((track, index) => {
+                const row = document.createElement('div');
+                row.className = 'spotify-track-row';
+                row.setAttribute('role', 'button');
+                row.tabIndex = 0;
+
+                const number = document.createElement('span');
+                number.className = 'spotify-track-number';
+                number.textContent = String(index + 1);
+
+                const title = document.createElement('div');
+                title.className = 'spotify-track-title';
+                const strong = document.createElement('strong');
+                strong.textContent = track.title;
+                const subtitle = document.createElement('span');
+                subtitle.textContent = track.artists.join(', ');
+                title.appendChild(strong);
+                title.appendChild(subtitle);
+
+                const album = document.createElement('span');
+                album.className = 'spotify-track-album';
+                album.textContent = track.album || 'Single';
+
+                const date = document.createElement('span');
+                date.className = 'spotify-track-date';
+                date.textContent = track.trackUrl ? 'Spotify' : 'Track';
+
+                const duration = document.createElement('span');
+                duration.className = 'spotify-track-duration';
+                duration.textContent = track.duration || '--:--';
+
+                row.appendChild(number);
+                row.appendChild(title);
+                row.appendChild(album);
+                row.appendChild(date);
+                row.appendChild(duration);
+
+                row.addEventListener('click', () => selectSpotifyTrack(index, { autoplay: true, loadEmbed: true }));
+                row.addEventListener('keydown', event => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        selectSpotifyTrack(index, { autoplay: true, loadEmbed: true });
+                    }
+                });
+
+                trackList.appendChild(row);
+            });
+        }
+
+        function applySpotifyPlaylist(playlist, playlistIndex) {
+            const gradient = spotifyHeroGradients[playlistIndex % spotifyHeroGradients.length];
+            document.getElementById('spotify-hero').style.background = `linear-gradient(180deg, ${gradient[0]} 0%, ${gradient[1]} 58%, #121212 100%)`;
+            document.getElementById('spotify-playlist-title').textContent = playlist.name;
+            document.getElementById('spotify-playlist-subtitle').textContent = playlist.description || 'Spotify playlist';
+            document.getElementById('spotify-playlist-description').textContent = playlist.description || 'Spotify playlist';
+            document.getElementById('spotify-owner-name').textContent = playlist.ownerName;
+            document.getElementById('spotify-overview-owner').textContent = playlist.ownerName;
+            document.getElementById('spotify-playlist-count').textContent = `${playlist.totalTracks} songs`;
+            document.getElementById('spotify-playlist-showing').textContent = playlist.visibleTrackCount < playlist.totalTracks
+                ? `showing ${playlist.visibleTrackCount}`
+                : playlist.totalTracks ? 'full view' : 'preview';
+            document.getElementById('spotify-overview-showing').textContent = playlist.visibleTrackCount < playlist.totalTracks
+                ? `${playlist.visibleTrackCount} of ${playlist.totalTracks}`
+                : (playlist.totalTracks ? `${playlist.totalTracks} tracks` : 'embed only');
+            document.getElementById('spotify-open-link').href = playlist.spotifyUrl;
+
+            setSpotifyArtwork(document.getElementById('spotify-cover-art'), playlist.imageUrl);
+            renderSpotifyTrackList(playlist);
+            spotifyCurrentTrackIndex = 0;
+            renderActiveTrackRow();
+            updateSpotifyNowPlaying(playlist.tracks[0] || null, playlist);
+            updateSpotifyTransportButtons();
+            loadSpotifyUri(`spotify:playlist:${playlist.id}`, false);
+        }
+
+        function loadPlaylist(id) {
+            const playlistIndex = myPlaylists.findIndex(playlist => playlist.id === id);
+            if (playlistIndex === -1) return;
+
+            spotifyCurrentPlaylistIndex = playlistIndex;
+            document.querySelectorAll('.spotify-playlist-item').forEach(item => {
+                item.classList.toggle('active', item.dataset.id === id);
+            });
+
+            applySpotifyPlaylist(myPlaylists[playlistIndex], playlistIndex);
+        }
+
+        function buildPlaylistSidebar() {
+            const list = document.getElementById('playlist-list');
+            list.innerHTML = '';
+
+            myPlaylists.forEach((playlist, index) => {
+                const item = document.createElement('button');
+                item.type = 'button';
+                item.className = 'spotify-playlist-item';
+                item.dataset.id = playlist.id;
+
+                const thumb = document.createElement('span');
+                thumb.className = 'spotify-playlist-thumb';
+                setSpotifyArtwork(thumb, playlist.imageUrl, getPlaylistInitials(playlist.name));
+
+                const meta = document.createElement('span');
+                meta.className = 'spotify-playlist-meta';
+                const name = document.createElement('span');
+                name.className = 'spotify-playlist-name';
+                name.textContent = playlist.name;
+                const detail = document.createElement('span');
+                detail.className = 'spotify-playlist-detail';
+                detail.textContent = `Playlist • ${playlist.ownerName}`;
+                meta.appendChild(name);
+                meta.appendChild(detail);
+
+                item.appendChild(thumb);
+                item.appendChild(meta);
+                item.addEventListener('click', () => loadPlaylist(playlist.id));
+                list.appendChild(item);
+
+                if (index === 0) item.classList.add('active');
+            });
+        }
+
+        async function initializeSpotify() {
+            const response = await fetch('spotify-playlists.json');
+            const data = await response.json();
+            myPlaylists = data.playlists || [];
+            if (!myPlaylists.length) return;
+
+            buildPlaylistSidebar();
+            setSpotifyPlayButtons(false);
+            loadPlaylist(myPlaylists[0].id);
+        }
+
+        document.getElementById('spotify-main-play-btn').addEventListener('click', toggleSpotifyPlayback);
+        document.getElementById('spotify-player-play-btn').addEventListener('click', toggleSpotifyPlayback);
+        document.getElementById('spotify-player-prev-btn').addEventListener('click', () => goToAdjacentSpotifyTrack(-1));
+        document.getElementById('spotify-player-next-btn').addEventListener('click', () => goToAdjacentSpotifyTrack(1));
+
+        initializeSpotify().catch(error => {
+            console.error('Failed to initialize Spotify playlists', error);
+        });
+
+        // --- Terminal typewriter for About window ---
+        let terminalHasPlayed = false;
+        const terminalLines = [
+            { text: 'Last login: ' + new Date().toDateString() + ' on ttys000', style: 'color:#666' },
+            { text: 'matthews-macbook:~ matthew$ cat about.txt', style: 'color:#98c379' },
+            { text: '' },
+            { text: 'Matthew Li', style: 'color:#fff; font-weight:700; font-size:16px' },
+            { text: '' },
+            { text: '  "The question, O me! so sad, recurring\u2014', style: 'color:#888; border-left:3px solid #555; padding-left:12px; display:block' },
+            { text: '   What good amid these, O me, O life?', style: 'color:#888; padding-left:15px; display:block' },
+            { text: '', style: '' },
+            { text: '                    Answer.', style: 'color:#c8ccd4; padding-left:15px; display:block; font-style:italic' },
+            { text: '   That you are here\u2014that life exists and identity,', style: 'color:#888; padding-left:15px; display:block' },
+            { text: '   That the powerful play goes on,', style: 'color:#888; padding-left:15px; display:block' },
+            { text: '   and you may contribute a verse."', style: 'color:#888; padding-left:15px; display:block' },
+            { text: '', style: 'color:#666; font-size:11px; display:block; margin-top:-4px' },
+            { text: '  \u2014 Walt Whitman', style: 'color:#666; font-size:12px; padding-left:12px' },
+            { text: '' },
+            { text: 'matthews-macbook:~ matthew$ _', style: 'color:#98c379' },
+        ];
+
+        function typeTerminal() {
+            const body = document.getElementById('terminal-body');
+            body.innerHTML = '';
+            let lineIdx = 0;
+
+            function typeLine() {
+                if (lineIdx >= terminalLines.length) return;
+                const line = terminalLines[lineIdx];
+                const el = document.createElement('div');
+                el.style.cssText = (line.style || '') + '; opacity:0; transform:translateY(2px); transition: opacity 0.15s, transform 0.15s;';
+                el.textContent = line.text;
+                body.appendChild(el);
+                // Trigger animation
+                requestAnimationFrame(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                });
+                body.scrollTop = body.scrollHeight;
+                lineIdx++;
+                setTimeout(typeLine, line.text === '' ? 60 : 50 + Math.random() * 40);
+            }
+            typeLine();
+        }
+
+        function openWindow(id) {
+            const win = document.getElementById('window-' + id);
+            win.classList.add('active');
+            win.classList.remove('minimized');
+            document.querySelectorAll('.window').forEach(w => w.style.zIndex = 10);
+            win.style.zIndex = 100;
+            if (id === 'about' && !terminalHasPlayed) {
+                terminalHasPlayed = true;
+                setTimeout(typeTerminal, 300);
+            }
+            if (id === 'projects' && typeof renderFinder === 'function') renderFinder();
+        }
+        function minimizeWindow(id) {
+            document.getElementById('window-' + id).classList.add('minimized');
+        }
+        function closeWindow(id) {
+            document.getElementById('window-' + id).classList.remove('active');
+            if (id === 'about') terminalHasPlayed = false;
+            if (id === 'spotify') {
+                spotifyEmbedController?.pause();
+                spotifyIsPlaying = false;
+                setSpotifyPlayButtons(false);
+            }
+            if (id === 'videoplayer') {
+                document.getElementById('videoplayer-video').pause();
+            }
+            if (id === 'projects') finderNav = [];
+        }
+
+        /* === Portfolio / Finder === */
+        const portfolioProjects = [
+            {
+                folder: 'Protosynthesis',
+                readme: 'Protosynthesis\n\nProtosynthesis is a visual workflow builder that lets users create complex, intelligent backend processes without writing a single line of boilerplate code.\n\nVisual Logic: Users drag and drop "nodes" representing APIs (OpenAI, Gemini, Stripe, Twilio, etc.) and logic blocks (Loops, If/Else).\n\nReal-time Execution: Watch data flow through your graph in real-time. Nodes light up as they execute, providing immediate visual feedback.\n\nOne-Click Integration: Connect disparate services like sending an SMS via Twilio when a MongoDB record updates, or generating an image with Stability AI based on a user\'s prompt.\n\nDynamic Context: Pass data between nodes seamlessly. The output of an OpenAI call can be directly piped into a Notion page or a Google Sheet.',
+                video: '',
+                link: 'https://www.youtube.com/watch?v=IVoOc2p0vyY'
+            },
+            {
+                folder: 'Project 2',
+                readme: 'Project 2\n\nDescription coming soon.\n\nReplace this with your project description.',
+                video: '',
+                link: ''
+            },
+            {
+                folder: 'Project 3',
+                readme: 'Project 3\n\nDescription coming soon.\n\nReplace this with your project description.',
+                video: '',
+                link: ''
+            },
+        ];
+
+        let finderNav = []; // breadcrumb stack
+
+        const folderSVG = `<svg class="fi-icon" viewBox="0 0 80 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 14C2 10.686 4.686 8 8 8h18l8 8h38c3.314 0 6 2.686 6 6v34c0 3.314-2.686 6-6 6H8c-3.314 0-6-2.686-6-6V14z" fill="#4BA3F5"/>
+            <path d="M2 22h76v34c0 3.314-2.686 6-6 6H8c-3.314 0-6-2.686-6-6V22z" fill="#5AB0FF"/>
+        </svg>`;
+        const readmeSVG = `<svg class="fi-icon" viewBox="0 0 64 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 4c0-2.21 1.79-4 4-4h32l20 20v56c0 2.21-1.79 4-4 4H8c-2.21 0-4-1.79-4-4V4z" fill="#F5F5F5" stroke="#ccc" stroke-width="1.5"/>
+            <path d="M40 0l20 20H44c-2.21 0-4-1.79-4-4V0z" fill="#E0E0E0"/>
+            <rect x="14" y="30" width="36" height="3" rx="1.5" fill="#bbb"/>
+            <rect x="14" y="38" width="28" height="3" rx="1.5" fill="#bbb"/>
+            <rect x="14" y="46" width="32" height="3" rx="1.5" fill="#bbb"/>
+            <rect x="14" y="54" width="20" height="3" rx="1.5" fill="#bbb"/>
+        </svg>`;
+        const videoSVG = `<svg class="fi-icon" viewBox="0 0 64 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 4c0-2.21 1.79-4 4-4h32l20 20v56c0 2.21-1.79 4-4 4H8c-2.21 0-4-1.79-4-4V4z" fill="#2C2C2E" stroke="#555" stroke-width="1.5"/>
+            <path d="M40 0l20 20H44c-2.21 0-4-1.79-4-4V0z" fill="#3A3A3C"/>
+            <polygon points="26,34 26,58 44,46" fill="#fff"/>
+        </svg>`;
+        const linkSVG = `<svg class="fi-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="4" width="56" height="56" rx="12" fill="#007AFF"/>
+            <path d="M24 40l-4 4a5.66 5.66 0 008 0l4-4" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+            <path d="M40 24l4-4a5.66 5.66 0 00-8 0l-4 4" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+            <line x1="26" y1="38" x2="38" y2="26" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+        </svg>`;
+
+        function renderFinder() {
+            const grid = document.getElementById('finder-grid');
+            const bc = document.getElementById('finder-breadcrumb');
+            const title = document.getElementById('finder-title');
+            grid.innerHTML = '';
+
+            if (finderNav.length === 0) {
+                // Root: show project folders
+                title.textContent = 'Portfolio';
+                bc.innerHTML = '<span class="bc-current">Portfolio</span>';
+                portfolioProjects.forEach((proj, idx) => {
+                    const item = document.createElement('div');
+                    item.className = 'finder-item';
+                    item.innerHTML = folderSVG + `<div class="fi-name">${proj.folder}</div>`;
+                    item.addEventListener('dblclick', () => { finderNav = [idx]; renderFinder(); });
+                    grid.appendChild(item);
+                });
+            } else {
+                // Inside a project folder
+                const proj = portfolioProjects[finderNav[0]];
+                title.textContent = proj.folder;
+                bc.innerHTML = `<span onclick="finderNav=[];renderFinder()">Portfolio</span><span class="bc-sep">›</span><span class="bc-current">${proj.folder}</span>`;
+
+                // README.md
+                const readme = document.createElement('div');
+                readme.className = 'finder-item';
+                readme.innerHTML = readmeSVG + `<div class="fi-name">README.md</div>`;
+                readme.addEventListener('dblclick', () => {
+                    document.getElementById('textedit-title').textContent = proj.folder + ' — README.md';
+                    document.getElementById('textedit-body').textContent = proj.readme;
+                    openWindow('textedit');
+                });
+                grid.appendChild(readme);
+
+                // demo.mp4
+                if (proj.video) {
+                    const vid = document.createElement('div');
+                    vid.className = 'finder-item';
+                    vid.innerHTML = videoSVG + `<div class="fi-name">demo.mp4</div>`;
+                    vid.addEventListener('dblclick', () => {
+                        document.getElementById('videoplayer-title').textContent = proj.folder + ' — demo.mp4';
+                        const v = document.getElementById('videoplayer-video');
+                        v.src = proj.video;
+                        openWindow('videoplayer');
+                    });
+                    grid.appendChild(vid);
+                }
+
+                // project link
+                if (proj.link) {
+                    const lnk = document.createElement('div');
+                    lnk.className = 'finder-item';
+                    lnk.innerHTML = linkSVG + `<div class="fi-name">${proj.folder}.com</div>`;
+                    lnk.addEventListener('dblclick', () => {
+                        window.open(proj.link, '_blank', 'noopener');
+                    });
+                    grid.appendChild(lnk);
+                }
+            }
+        }
+
         document.querySelectorAll('.dock-item').forEach(item => {
             item.addEventListener('click', () => openWindow(item.getAttribute('data-window')));
+        });
+
+        // Wire minimize buttons
+        document.querySelectorAll('.control.minimize').forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.stopPropagation();
+                const win = btn.closest('.window');
+                const id = win.id.replace('window-', '');
+                minimizeWindow(id);
+            });
+        });
+
+        // Bring window to front on click anywhere in it
+        document.querySelectorAll('.window').forEach(win => {
+            win.addEventListener('mousedown', () => {
+                document.querySelectorAll('.window').forEach(w => w.style.zIndex = 10);
+                win.style.zIndex = 100;
+            });
         });
 
         document.querySelectorAll('.title-bar').forEach(header => {
@@ -1376,6 +3105,144 @@
             });
             window.addEventListener('mouseup', () => isDragging = false);
         });
+
+        /* --- Fluid Settings Panel Wiring --- */
+        (function initFluidPanel() {
+            const btn = document.getElementById('settings-btn');
+            const panel = document.getElementById('fluid-panel');
+
+            btn.addEventListener('click', () => {
+                btn.classList.toggle('open');
+                panel.classList.toggle('visible');
+            });
+
+            // Close panel when clicking outside
+            document.addEventListener('mousedown', (e) => {
+                if (!panel.contains(e.target) && !btn.contains(e.target) && panel.classList.contains('visible')) {
+                    panel.classList.remove('visible');
+                    btn.classList.remove('open');
+                }
+            });
+
+            // Prevent fluid interaction when interacting with panel
+            panel.addEventListener('mousedown', e => e.stopPropagation());
+            panel.addEventListener('mousemove', e => e.stopPropagation());
+            panel.addEventListener('touchstart', e => e.stopPropagation());
+            panel.addEventListener('touchmove', e => e.stopPropagation());
+
+            // Helper to wire a slider
+            function wireSlider(id, configKey, decimals) {
+                const slider = document.getElementById(id);
+                const valEl = document.getElementById(id + '-val');
+                slider.addEventListener('input', () => {
+                    const v = parseFloat(slider.value);
+                    config[configKey] = v;
+                    valEl.textContent = decimals != null ? v.toFixed(decimals) : v;
+                });
+            }
+
+            // Dropdowns
+            document.getElementById('fp-quality').addEventListener('change', function() {
+                config.DYE_RESOLUTION = parseInt(this.value);
+                initFramebuffers();
+            });
+            document.getElementById('fp-sim-res').addEventListener('change', function() {
+                config.SIM_RESOLUTION = parseInt(this.value);
+                initFramebuffers();
+            });
+
+            // Sliders
+            wireSlider('fp-density', 'DENSITY_DISSIPATION', 2);
+            wireSlider('fp-velocity', 'VELOCITY_DISSIPATION', 2);
+            wireSlider('fp-pressure', 'PRESSURE', 2);
+            wireSlider('fp-curl', 'CURL', 0);
+            wireSlider('fp-splat', 'SPLAT_RADIUS', 2);
+            wireSlider('fp-bloom-intensity', 'BLOOM_INTENSITY', 2);
+            wireSlider('fp-bloom-threshold', 'BLOOM_THRESHOLD', 2);
+            wireSlider('fp-sunrays-weight', 'SUNRAYS_WEIGHT', 2);
+
+            // Checkboxes
+            document.getElementById('fp-shading').addEventListener('change', function() {
+                config.SHADING = this.checked;
+                updateKeywords();
+            });
+            document.getElementById('fp-colorful').addEventListener('change', function() {
+                config.COLORFUL = this.checked;
+            });
+            document.getElementById('fp-paused').addEventListener('change', function() {
+                config.PAUSED = this.checked;
+                if (this.checked) {
+                    // Reinitialize all framebuffers to clear everything
+                    initFramebuffers();
+                }
+            });
+            document.getElementById('fp-bloom').addEventListener('change', function() {
+                config.BLOOM = this.checked;
+                updateKeywords();
+            });
+            document.getElementById('fp-sunrays').addEventListener('change', function() {
+                config.SUNRAYS = this.checked;
+                updateKeywords();
+            });
+            document.getElementById('fp-transparent').addEventListener('change', function() {
+                config.TRANSPARENT = this.checked;
+            });
+
+            // Random splats
+            document.getElementById('fp-random-splats').addEventListener('click', () => {
+                multipleSplats(Math.floor(Math.random() * 20) + 5);
+            });
+
+            // Background color
+            const bgColorInput = document.getElementById('fp-bg-color');
+            const bgColorPreview = document.getElementById('fp-bg-color-preview');
+            const bgColorText = document.getElementById('fp-bg-color-text');
+            bgColorInput.addEventListener('input', function() {
+                const hex = this.value;
+                bgColorPreview.style.background = hex;
+                const r = parseInt(hex.slice(1,3), 16);
+                const g = parseInt(hex.slice(3,5), 16);
+                const b = parseInt(hex.slice(5,7), 16);
+                config.BACK_COLOR = { r: r / 255, g: g / 255, b: b / 255 };
+                bgColorText.textContent = `{r:${r},g:${g},b:${b}}`;
+            });
+
+            // Screenshot
+            document.getElementById('fp-screenshot').addEventListener('click', () => {
+                const res = config.CAPTURE_RESOLUTION;
+                let target = createFBO(res, res, ext.formatRGBA.internalFormat, ext.formatRGBA.format, ext.halfFloatTexType, gl.NEAREST);
+                render(target);
+
+                let texelSizeX = 1.0 / res, texelSizeY = 1.0 / res;
+                // Read pixels as bytes
+                let pixels = new Uint8Array(res * res * 4);
+                gl.readPixels(0, 0, res, res, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+
+                let captureCanvas = document.createElement('canvas');
+                captureCanvas.width = res;
+                captureCanvas.height = res;
+                let ctx2d = captureCanvas.getContext('2d');
+                let imageData = ctx2d.createImageData(res, res);
+
+                // Flip vertically (WebGL is bottom-up)
+                for (let y = 0; y < res; y++) {
+                    let srcRow = (res - 1 - y) * res * 4;
+                    let dstRow = y * res * 4;
+                    for (let x = 0; x < res * 4; x++) {
+                        imageData.data[dstRow + x] = pixels[srcRow + x];
+                    }
+                }
+                if (!config.TRANSPARENT) {
+                    for (let i = 3; i < imageData.data.length; i += 4) imageData.data[i] = 255;
+                }
+
+                ctx2d.putImageData(imageData, 0, 0);
+                let link = document.createElement('a');
+                link.download = 'fluid-capture.png';
+                link.href = captureCanvas.toDataURL('image/png');
+                link.click();
+            });
+        })();
 
         updateKeywords();
         initFramebuffers();
