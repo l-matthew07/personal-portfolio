@@ -155,8 +155,9 @@
     .proj-summary {
       display: flex;
       align-items: baseline;
-      flex-wrap: wrap;
     }
+
+    .proj-text { flex: 1; min-width: 0; }
 
     .proj-toggle {
       background: none;
@@ -316,7 +317,7 @@
         <span class="proj-num">i.</span>
         <div class="proj-details">
           <div class="proj-summary">
-            <button class="proj-toggle" onclick="toggleProject(this)" aria-label="expand">▶</button><a class="proj-name" href="https://sidewalk-sheds.vercel.app" target="_blank" rel="noopener">sidewalk-shed</a><span class="proj-desc"> — route planner through NYC under maximum scaffolding coverage</span>&nbsp;<span class="proj-metric">(5k+ users)</span>
+            <button class="proj-toggle" onclick="toggleProject(this)" aria-label="expand">▶</button><span class="proj-text"><a class="proj-name" href="https://sidewalk-sheds.vercel.app" target="_blank" rel="noopener">sidewalk-shed</a><span class="proj-desc">&nbsp;— route planner through NYC under maximum scaffolding coverage</span>&nbsp;<span class="proj-metric">(5k+ users)</span></span>
           </div>
           <div class="proj-expanded">
             Maps a walking route through New York City under as much scaffolding as possible. Useful if it's raining and you forgot your umbrella or something.
@@ -328,7 +329,7 @@
         <span class="proj-num">ii.</span>
         <div class="proj-details">
           <div class="proj-summary">
-            <button class="proj-toggle" onclick="toggleProject(this)" aria-label="expand">▶</button><a class="proj-name" href="https://cramrapp.com" target="_blank" rel="noopener">cramrapp</a><span class="proj-desc"> — group study session and progress tracking, competitive features coming</span>&nbsp;<span class="proj-metric">(1k+ users, in progress)</span>
+            <button class="proj-toggle" onclick="toggleProject(this)" aria-label="expand">▶</button><span class="proj-text"><a class="proj-name" href="https://cramrapp.com" target="_blank" rel="noopener">cramrapp</a><span class="proj-desc">&nbsp;— group study session and progress tracking, competitive features coming</span>&nbsp;<span class="proj-metric">(1k+ users, in progress)</span></span>
           </div>
           <div class="proj-expanded">
             Study tracking platform for groups — log sessions, measure progress, and compete with friends. Competitive leaderboard features actively in development.
@@ -340,7 +341,7 @@
         <span class="proj-num">iii.</span>
         <div class="proj-details">
           <div class="proj-summary">
-            <button class="proj-toggle" onclick="toggleProject(this)" aria-label="expand">▶</button><a class="proj-name" href="https://ttcleaderboard.vercel.app" target="_blank" rel="noopener">ttcleaderboard</a><span class="proj-desc"> — live ranking of TTC streetcars by speed</span>&nbsp;<span class="proj-metric">(40k+ users)</span>
+            <button class="proj-toggle" onclick="toggleProject(this)" aria-label="expand">▶</button><span class="proj-text"><a class="proj-name" href="https://ttcleaderboard.vercel.app" target="_blank" rel="noopener">ttcleaderboard</a><span class="proj-desc">&nbsp;— live ranking of TTC streetcars by speed</span>&nbsp;<span class="proj-metric">(40k+ users)</span></span>
           </div>
           <div class="proj-expanded">
             Real-time leaderboard tracking the speed of every Toronto streetcar. Featured in CityNews, BlogTO, and Waterloo News.
@@ -352,10 +353,10 @@
         <span class="proj-num">iv.</span>
         <div class="proj-details">
           <div class="proj-summary">
-            <button class="proj-toggle" onclick="toggleProject(this)" aria-label="expand">▶</button><a class="proj-name" href="https://protosynthesis.vercel.app" target="_blank" rel="noopener">protosynthesis</a><span class="proj-desc"> — drag and drop workflow builder with 30+ templates, webhooks, and MCP connections</span>&nbsp;<span class="proj-metric">(in progress)</span>
+            <button class="proj-toggle" onclick="toggleProject(this)" aria-label="expand">▶</button><span class="proj-text"><a class="proj-name" href="https://protosynthesis.vercel.app" target="_blank" rel="noopener">protosynthesis</a><span class="proj-desc">&nbsp;— drag and drop workflow builder with <strong>30+ templates</strong>, webhooks, and MCP connections</span>&nbsp;<span class="proj-metric">(in progress)</span></span>
           </div>
           <div class="proj-expanded">
-            Visual workflow automation builder. 30+ prebuilt templates with support for webhooks and Model Context Protocol (MCP) connections. Actively in development.
+            Visual workflow automation builder. <strong>30+ prebuilt templates</strong> with support for webhooks and Model Context Protocol (MCP) connections. Actively in development.
           </div>
         </div>
       </li>
@@ -364,7 +365,7 @@
         <span class="proj-num">v.</span>
         <div class="proj-details">
           <div class="proj-summary">
-            <button class="proj-toggle" onclick="toggleProject(this)" aria-label="expand">▶</button><a class="proj-name" href="http://165.22.184.215/" target="_blank" rel="noopener">url shortener</a><span class="proj-desc"> — production-grade url shortener with full observability stack</span>
+            <button class="proj-toggle" onclick="toggleProject(this)" aria-label="expand">▶</button><span class="proj-text"><a class="proj-name" href="http://165.22.184.215/" target="_blank" rel="noopener">url shortener</a><span class="proj-desc">&nbsp;— production-grade url shortener with full observability stack</span></span>
           </div>
           <div class="proj-expanded">
             Built with Nginx, Redis, Prometheus, Grafana, Loki, and Fail2Ban. Full metrics, logging, and rate limiting — proper infra, not a toy.
@@ -376,10 +377,27 @@
         <span class="proj-num">vi.</span>
         <div class="proj-details">
           <div class="proj-summary">
-            <button class="proj-toggle" onclick="toggleProject(this)" aria-label="expand">▶</button><a class="proj-name" href="https://everything-ever.vercel.app/" target="_blank" rel="noopener">everything ever</a><span class="proj-desc"> — WebGL map of the startup/open-source landscape that finds genuinely unoccupied idea space</span>
+            <button class="proj-toggle" onclick="toggleProject(this)" aria-label="expand">▶</button><span class="proj-text"><a class="proj-name" href="https://everything-ever.vercel.app/" target="_blank" rel="noopener">everything ever</a><span class="proj-desc">&nbsp;— WebGL map of the startup/open-source landscape that finds genuinely unoccupied idea space</span></span>
           </div>
           <div class="proj-expanded">
-            Self-contained Python + WebGL system that maps 6,000+ YC companies and 1,400+ GitHub projects, uses novelty search to find genuinely unoccupied regions, has an LLM write concrete product ideas into those gaps, then audits whether each idea actually landed in empty space. Embedder, SVD, graph layout, and renderer all hand-written — the only dependencies are Python and numpy.
+            Self-contained Python + WebGL system that maps <strong>6,000+ YC companies</strong> and <strong>1,400+ GitHub projects</strong>, uses novelty search to find genuinely unoccupied regions, has an LLM write concrete product ideas into those gaps, then audits whether each idea actually landed in empty space. Embedder, SVD, graph layout, and renderer all hand-written — the only dependencies are Python and numpy.
+          </div>
+        </div>
+      </li>
+
+      <li class="project-item">
+        <span class="proj-num">vii.</span>
+        <div class="proj-details">
+          <div class="proj-summary">
+            <button class="proj-toggle" onclick="toggleProject(this)" aria-label="expand">▶</button><span class="proj-text"><a class="proj-name" href="https://github.com/l-matthew07/google-careers-apply-watcher" target="_blank" rel="noopener">apply-watcher</a><span class="proj-desc">&nbsp;— production job-monitoring infrastructure built for zero2sudo, an early-tech-career creator with <strong>93K+ Instagram followers</strong> and a <strong>250K+ community</strong></span></span>
+          </div>
+          <div class="proj-expanded">
+            <ul style="list-style-position: outside; padding-left: 20px; display: flex; flex-direction: column; gap: 8px;">
+              <li>Engineered a lightweight HTTP monitoring service for <strong>Google and other early-career roles</strong>, polling job pages every <strong>5 minutes</strong> and detecting server-rendered application availability without browser automation</li>
+              <li>Built <strong>3 production deployment variants</strong>: zero-dependency Python 3 with native macOS notifications; <strong>Node.js 22 AWS Lambda</strong> with EventBridge scheduling, SSM Parameter Store, and iMessage delivery; and a configurable Python notifier supporting <strong>Slack, email, and webhooks</strong></li>
+              <li>Designed for <strong>24/7 unattended operation</strong>, with resilient HTTP fetching, persistent state, idempotent change detection, and duplicate-alert prevention across <strong>1,000+ tracked listings</strong></li>
+              <li>Eliminated browser automation to minimize compute and operational overhead, enabling <strong>low-latency, continuous polling</strong> across multiple notification and deployment environments</li>
+            </ul>
           </div>
         </div>
       </li>
